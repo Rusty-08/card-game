@@ -8,6 +8,7 @@ function App() {
   const [selectedCard, setSelectedCard] = useState([]);
   const [hasWon, setHasWon] = useState(false);
   const [isGameEnded, setIsGameEnded] = useState(false);
+  const [isFlipped, setIsFlipped] = useState(false)
 
   const generateEntries = (newItems) => {
     const randomItemsSort = sortRandomly(newItems)
@@ -53,6 +54,14 @@ function App() {
       setHasWon(false)
       setIsGameEnded(true)
     }
+    handleFlip()
+  }
+
+  const handleFlip = () => {
+    setIsFlipped(true)
+    setTimeout(() => {
+      setIsFlipped(false)
+    }, 1000)
   }
 
   const removeSelectedCard = (card) => {
@@ -75,7 +84,9 @@ function App() {
   }
 
   useEffect(() => {
-    setEntries(generateEntries(items))
+    setTimeout(() => {
+      setEntries(generateEntries(items))
+    }, 1000)
   }, [items])
 
   return (
@@ -84,6 +95,7 @@ function App() {
         !isGameEnded
           ? (
             <Board
+              isFlipped={isFlipped}
               entries={entries}
               handleClick={handleClick} />
           ) : (
