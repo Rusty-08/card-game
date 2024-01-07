@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
-
-const ITEMS = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }, { id: 6 }, { id: 7 }, { id: 8 }, { id: 9 }, { id: 10 }];
+import { Cards } from './data/Cards';
+import Board from './components/Board';
 
 function App() {
-  const [items, setItems] = useState(ITEMS);
+  const [items, setItems] = useState(Cards);
   const [entries, setEntries] = useState([]);
   const [selectedCard, setSelectedCard] = useState([]);
   const [hasWon, setHasWon] = useState(false);
@@ -83,17 +83,9 @@ function App() {
       {
         !isGameEnded
           ? (
-            <div className="">
-              {entries.map(entry => (
-                <button
-                  key={entry}
-                  className='card'
-                  onClick={() => handleClick(entry)}
-                >
-                  {entry.id}
-                </button>
-              ))}
-            </div>
+            <Board
+              entries={entries}
+              handleClick={handleClick} />
           ) : (
             <div className="">
               {
