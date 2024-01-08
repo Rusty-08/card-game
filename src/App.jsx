@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Cards } from './data/Cards';
 import Board from './components/Board';
+import logo from './assets/images/logo.png'
 
 function App() {
   const [items, setItems] = useState(Cards);
@@ -42,26 +43,32 @@ function App() {
     return randomItemsSort.slice(0, 4);
   }
 
-  const handleClick = (card) => {
+  const manageEntries = (card) => {
     if (!selectedCard.includes(card)) {
       removeSelectedCard(card);
       setSelectedCard([...selectedCard, card])
       if (items.length === 1) {
         setHasWon(true)
-        setIsGameEnded(true)
+        setTimeout(() => {
+          setIsGameEnded(true)
+        }, 500)
       }
     } else {
       setHasWon(false)
-      setIsGameEnded(true)
+      setTimeout(() => {
+        setIsGameEnded(true)
+      }, 500)
     }
-    handleFlip()
-  }
-
-  const handleFlip = () => {
-    setIsFlipped(true)
     setTimeout(() => {
       setIsFlipped(false)
     }, 1000)
+  }
+
+  const handleClick = (card) => {
+    setIsFlipped(true)
+    setTimeout(() => {
+      manageEntries(card)
+    }, 500)
   }
 
   const removeSelectedCard = (card) => {
@@ -84,13 +91,13 @@ function App() {
   }
 
   useEffect(() => {
-    setTimeout(() => {
-      setEntries(generateEntries(items))
-    }, 1000)
+    setEntries(generateEntries(items))
   }, [items])
 
   return (
-    <div className='App'>
+    <div className='App bg-slate-800 h-screen w-full flex-col flex items-center justify-center'>
+      <img src={logo} className='h-28' />
+      <h1 className='text-xl px-10 bg-gradient-to-r from-slate-800 from-0% via-slate-700 via-50% to-slate-800 to-100% text-sky-100 mb-5 mt-2'>MEMORY GAME</h1>
       {
         !isGameEnded
           ? (
@@ -108,6 +115,7 @@ function App() {
             </div>
           )
       }
+      <h1 className='py-2 px-10 mt-5 rounded-full bg-slate-500 bg-opacity-5 backdrop-blur-sm text-xl text-sky-600'>{selectedCard.length} / {Cards.length}</h1>
     </div>
   )
 }
