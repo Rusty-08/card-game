@@ -1,3 +1,4 @@
+import uniqid from 'uniqid'
 import luffy from '../assets/images/luffy.png'
 import zoro from '../assets/images/zoro.png'
 import sanji from '../assets/images/sanji.png'
@@ -10,14 +11,14 @@ import jimbie from '../assets/images/jimbie.png'
 import chopper from '../assets/images/chopper.png'
 
 export const Cards = [
-  { id: 1, image: luffy, name: 'luffy' },
-  { id: 2, image: zoro, name: 'zoro' },
-  { id: 3, image: sanji, name: 'sanji' },
-  { id: 4, image: nami, name: 'nami' },
-  { id: 5, image: ussop, name: 'ussop' },
-  { id: 6, image: brook, name: 'brook' },
-  { id: 7, image: robin, name: 'robin' },
-  { id: 8, image: franky, name: 'franky' },
-  { id: 9, image: jimbie, name: 'jimbie' },
-  { id: 10, image: chopper, name: 'chopper' }
+  { id: uniqid(), image: luffy, name: 'luffy' },
+  { id: uniqid(), image: zoro, name: 'zoro' },
+  { id: uniqid(), image: sanji, name: 'sanji' },
+  { id: uniqid(), image: nami, name: 'nami' },
+  { id: uniqid(), image: ussop, name: 'ussop' },
+  { id: uniqid(), image: brook, name: 'brook' },
+  { id: uniqid(), image: robin, name: 'robin' },
+  { id: uniqid(), image: franky, name: 'franky' },
+  { id: uniqid(), image: jimbie, name: 'jimbie' },
+  { id: uniqid(), image: chopper, name: 'chopper' }
 ]

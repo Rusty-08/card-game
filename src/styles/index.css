@@ -11,3 +11,8 @@
 * {
   font-family: 'OnePieceFont', Helvetica, sans-serif;
 }
+
+.App {
+  background-image: url(../assets/images/background.jpg);
+  background-size: cover;
+}
