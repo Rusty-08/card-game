@@ -5,6 +5,7 @@ import ReactCardFlip from 'react-card-flip';
 import Result from './Result';
 import { Cards } from '../data/Cards';
 import NumberItem from './NumberItem';
+import ScoreCard from './ScoreCard';
 
 /* eslint-disable react/prop-types */
 export default function Board() {
@@ -50,6 +51,9 @@ export default function Board() {
 
   const manageEntries = (card) => {
     if (!selectedCard.includes(card)) {
+      if (highScore === 0 || selectedCard.length >= highScore) {
+        setHighScore(highScore + 1)
+      }
       if (items.length !== 1) {
         removeSelectedCard(card);
       }
@@ -115,23 +119,24 @@ export default function Board() {
       {
         !isGameEnded
           ? (
-            <div className="w-full relative flex flex-row gap-5 items-center justify-center">
+            <div className="w-full flex flex-row gap-5 items-center justify-center">
               {entries.map(entry => (
                 <ReactCardFlip key={entry.id} isFlipped={isFlipped}>
                   <FrontCard
-                    key={entry.id}
                     entry={entry}
                     handleClick={handleClick} />
                   <BackCard />
                 </ReactCardFlip>
               ))}
-              {/* <div>{}</div> */}
             </div>
           ) : (
             <Result hasWon={hasWon} restartGame={restartGame} />
           )
       }
       <NumberItem selectedCard={selectedCard} cards={Cards} />
+      <ScoreCard
+        score={selectedCard.length}
+        bestScore={highScore} />
     </>
   )
 }
