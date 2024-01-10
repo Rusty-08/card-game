@@ -3,7 +3,7 @@ import React from 'react'
 export default function Button({ children, ...props }) {
   return (
     <button
-      className='text-xl shadow-lg text-sky-100 rounded-full px-8 py-2.5 bg-sky-400 bg-opacity-20 hover:bg-opacity-30 active:bg-opacity-20 backdrop-blur-md transition-colors'
+      className='text-xl tracking-wide shadow-lg text-sky-100 rounded-full px-8 py-2.5 bg-amber-950 hover:bg-red-950 hover:scale-110 active:bg-opacity-20 backdrop-blur-md transition-all ease-in-out duration-300'
       {...props}
     >
       {children}

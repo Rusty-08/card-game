@@ -8,7 +8,7 @@ import NumberItem from './NumberItem';
 import ScoreCard from './ScoreCard';
 
 /* eslint-disable react/prop-types */
-export default function Board() {
+export default function Board({ level }) {
   const [items, setItems] = useState(Cards);
   const [entries, setEntries] = useState([]);
   const [selectedCard, setSelectedCard] = useState([]);
@@ -114,25 +114,36 @@ export default function Board() {
     setEntries(generateEntries(items))
   }, [items])
 
+  const gameMode = () => {
+    if (level === 'Easy') {
+      return items.slice(0, 5)
+    } else if (level === 'Medium') {
+      return items.slice(0, 8)
+    } else {
+      return items
+    }
+  }
+
+  useEffect(() => {
+    setItems(gameMode())
+  }, [level])
+
   return (
     <>
-      {
-        !isGameEnded
-          ? (
-            <div className="w-full flex flex-row gap-5 items-center justify-center">
-              {entries.map(entry => (
-                <ReactCardFlip key={entry.id} isFlipped={isFlipped}>
-                  <FrontCard
-                    entry={entry}
-                    handleClick={handleClick} />
-                  <BackCard />
-                </ReactCardFlip>
-              ))}
-            </div>
-          ) : (
-            <Result hasWon={hasWon} restartGame={restartGame} />
-          )
-      }
+      <div className={`transform ${isGameEnded ? 'scale-0 h-0 opacity-0' : 'scale-100 opacity-100'} transition-all duration-500 ease-in-out w-full flex flex-row gap-5 items-center justify-center`}>
+        {entries.map(entry => (
+          <ReactCardFlip key={entry.id} isFlipped={isFlipped}>
+            <FrontCard
+              entry={entry}
+              handleClick={handleClick} />
+            <BackCard />
+          </ReactCardFlip>
+        ))}
+      </div>
+      <Result
+        hasWon={hasWon}
+        restartGame={restartGame}
+        isGameEnded={isGameEnded} />
       <NumberItem selectedCard={selectedCard} cards={Cards} />
       <ScoreCard
         score={selectedCard.length}
