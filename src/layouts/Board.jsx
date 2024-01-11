@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
-import BackCard from "./BackCard";
-import FrontCard from "./FrontCard";
+import BackCard from "../components/BackCard";
+import FrontCard from "../components/FrontCard";
 import ReactCardFlip from 'react-card-flip';
-import Result from './Result';
+import Result from '../components/Result';
 import { Cards } from '../data/Cards';
-import NumberItem from './NumberItem';
-import ScoreCard from './ScoreCard';
+import NumberItem from '../components/NumberItem';
+import ScoreCard from '../components/ScoreCard';
 
 /* eslint-disable react/prop-types */
 export default function Board({ level }) {
@@ -110,17 +110,13 @@ export default function Board({ level }) {
     setIsFlipped(false)
   }
 
-  useEffect(() => {
-    setEntries(generateEntries(items))
-  }, [items])
-
   const gameMode = () => {
     if (level === 'Easy') {
-      return items.slice(0, 5)
+      return Cards.slice(0, 5)
     } else if (level === 'Medium') {
-      return items.slice(0, 8)
+      return Cards.slice(0, 8)
     } else {
-      return items
+      return Cards
     }
   }
 
@@ -128,9 +124,13 @@ export default function Board({ level }) {
     setItems(gameMode())
   }, [level])
 
+  useEffect(() => {
+    setEntries(generateEntries(items))
+  }, [items])
+
   return (
     <>
-      <div className={`transform ${isGameEnded ? 'scale-0 h-0 opacity-0' : 'scale-100 opacity-100'} transition-all duration-500 ease-in-out w-full flex flex-row gap-5 items-center justify-center`}>
+      <div className={`transform ${isGameEnded ? 'scale-0 h-0 absolute top-[60%] opacity-0' : 'scale-100 relative opacity-100'} transition-all duration-500 ease-in-out w-full flex flex-row gap-5 items-center justify-center`}>
         {entries.map(entry => (
           <ReactCardFlip key={entry.id} isFlipped={isFlipped}>
             <FrontCard
@@ -144,7 +144,7 @@ export default function Board({ level }) {
         hasWon={hasWon}
         restartGame={restartGame}
         isGameEnded={isGameEnded} />
-      <NumberItem selectedCard={selectedCard} cards={Cards} />
+      <NumberItem selectedCard={selectedCard} cards={gameMode()} />
       <ScoreCard
         score={selectedCard.length}
         bestScore={highScore} />

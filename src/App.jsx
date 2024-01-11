@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import Board from './components/Board';
+import Board from './layouts/Board';
 import Header from './layouts/Header';
-import LandingPage from './layouts/LandingPage';
+import Button from './components/Button';
 
 const levels = [
   'Easy',
@@ -13,9 +13,10 @@ function App() {
   const [level, setLevel] = useState('')
   const [isPlaying, setIsPlaying] = useState(false)
 
-  const play = event => {
-    setLevel(event.target.value)
+  const play = name => {
+    setLevel(name)
     setIsPlaying(true)
+    console.log(level)
   }
 
   return (
@@ -24,7 +25,15 @@ function App() {
       {
         isPlaying
           ? <Board level={level} />
-          : <LandingPage levels={levels} setLevel={play} />
+          : <div className='flex gap-4 my-10'>
+            {
+              levels.map(name => (
+                <Button key={name} onClick={() => play(name)}>
+                  {name}
+                </Button>
+              ))
+            }
+          </div>
       }
     </div>
   )
