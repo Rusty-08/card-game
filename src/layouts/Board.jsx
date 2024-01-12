@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import BackCard from "../components/BackCard";
 import FrontCard from "../components/FrontCard";
 import ReactCardFlip from 'react-card-flip';
@@ -6,9 +6,10 @@ import Result from '../components/Result';
 import { Cards } from '../data/Cards';
 import NumberItem from '../components/NumberItem';
 import ScoreCard from '../components/ScoreCard';
+import flipSound from '../assets/sound-effects/flip.mp3'
 
 /* eslint-disable react/prop-types */
-export default function Board({ level }) {
+export default function Board({ level, isVolumeMuted }) {
   const [items, setItems] = useState(Cards);
   const [entries, setEntries] = useState([]);
   const [selectedCard, setSelectedCard] = useState([]);
@@ -16,6 +17,15 @@ export default function Board({ level }) {
   const [isGameEnded, setIsGameEnded] = useState(false);
   const [isFlipped, setIsFlipped] = useState(false)
   const [highScore, setHighScore] = useState(0)
+  const flipAudio = useRef(new Audio(flipSound))
+
+  const playFlipSound = () => {
+    flipAudio.current.currentTime = 0;
+    flipAudio.current.volume = 0.5
+    if (!isVolumeMuted) {
+      flipAudio.current.play()
+    }
+  }
 
   const generateEntries = (newItems) => {
     const randomItemsSort = sortRandomly(newItems)
@@ -64,19 +74,23 @@ export default function Board({ level }) {
           setIsGameEnded(true)
         }, 500)
       }
+      if (items.length !== 1) {
+        setTimeout(() => {
+          setIsFlipped(false)
+          playFlipSound()
+        }, 1000)
+      }
     } else {
       setHasWon(false)
       setTimeout(() => {
         setIsGameEnded(true)
       }, 500)
     }
-    setTimeout(() => {
-      setIsFlipped(false)
-    }, 1000)
   }
 
   const handleClick = (card) => {
     setIsFlipped(true)
+    playFlipSound()
     setTimeout(() => {
       manageEntries(card)
     }, 500)
@@ -112,9 +126,9 @@ export default function Board({ level }) {
 
   const gameMode = () => {
     if (level === 'Easy') {
-      return Cards.slice(0, 5)
+      return Cards.slice(0, 10)
     } else if (level === 'Medium') {
-      return Cards.slice(0, 8)
+      return Cards.slice(0, 15)
     } else {
       return Cards
     }

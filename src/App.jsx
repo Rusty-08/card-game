@@ -2,21 +2,18 @@ import { useEffect, useState } from 'react';
 import Board from './layouts/Board';
 import Header from './layouts/Header';
 import Button from './components/Button';
+import Sound from './components/Sound';
 
-const levels = [
-  'Easy',
-  'Medium',
-  'Hard'
-]
+const levels = ['Easy', 'Medium', 'Hard']
 
 function App() {
   const [level, setLevel] = useState('')
   const [isPlaying, setIsPlaying] = useState(false)
+  const [isVolumeMuted, setIsVolumeMuted] = useState(false)
 
   const play = name => {
-    setLevel(name)
     setIsPlaying(true)
-    console.log(level)
+    setLevel(name)
   }
 
   return (
@@ -24,17 +21,23 @@ function App() {
       <Header isPlaying={isPlaying} />
       {
         isPlaying
-          ? <Board level={level} />
+          ? <Board level={level} isVolumeMuted={isVolumeMuted} />
           : <div className='flex gap-4 my-10'>
             {
               levels.map(name => (
-                <Button key={name} onClick={() => play(name)}>
+                <Button
+                  key={name}
+                  onClick={() => play(name)}
+                >
                   {name}
                 </Button>
               ))
             }
           </div>
       }
+      <Sound
+        isVolumeMuted={isVolumeMuted}
+        setIsVolumeMuted={() => setIsVolumeMuted(!isVolumeMuted)} />
     </div>
   )
 }
