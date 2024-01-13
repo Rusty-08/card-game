@@ -13,7 +13,7 @@ export default function Card({ entry, handleClick }) {
         activeOffset={30}
         className='cursor-pointer'
       >
-        <div className="lg:w-60 lg:h-80 rounded-lg overflow-hidden">
+        <div className="md:w-60 md:h-80 w-32 rounded-lg overflow-hidden">
           <img src={entry.image} className='h-full w-full' />
         </div>
       </Atropos>

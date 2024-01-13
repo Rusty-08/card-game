@@ -27,7 +27,7 @@ export default function Button({ type, children, onClick, className, ...props })
   return (
     <button
       className={twMerge(
-        `px-8 py-2.5 flex items-center justify-center text-xl tracking-wide shadow-lg text-primary-cream rounded-full bg-primary-dark hover:bg-slate-950 hover:scale-110 active:bg-opacity-20 backdrop-blur-md transition-all ease-in-out duration-300`,
+        `${type === 'circle' ? 'w-12 h-12 p-3.5 bg-opacity-10 backdrop-blur-sm text-primary hover:bg-opacity-20' : 'text-primary-dark md:px-8 px-6 py-2 md:py-2.5'} flex items-center justify-center font-bold text-xl tracking-wide shadow-lg rounded-full bg-primary hover:bg-primary-hover hover:scale-110 active:bg-opacity-20 backdrop-blur-md transition-all ease-in-out duration-300`,
         className
       )}
       onClick={combinedClickHandlers}

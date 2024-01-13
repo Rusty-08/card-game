@@ -6,7 +6,7 @@ import Result from '../components/Result';
 import { Cards } from '../data/Cards';
 import NumberItem from '../components/NumberItem';
 import ScoreCard from '../components/ScoreCard';
-import flipSound from '../assets/sound-effects/flip.mp3'
+import Sound from '../components/sound';
 
 /* eslint-disable react/prop-types */
 export default function Board({ level, isVolumeMuted }) {
@@ -17,15 +17,6 @@ export default function Board({ level, isVolumeMuted }) {
   const [isGameEnded, setIsGameEnded] = useState(false);
   const [isFlipped, setIsFlipped] = useState(false)
   const [highScore, setHighScore] = useState(0)
-  const flipAudio = useRef(new Audio(flipSound))
-
-  const playFlipSound = () => {
-    flipAudio.current.currentTime = 0;
-    flipAudio.current.volume = 0.5
-    if (!isVolumeMuted) {
-      flipAudio.current.play()
-    }
-  }
 
   const generateEntries = (newItems) => {
     const randomItemsSort = sortRandomly(newItems)
@@ -64,33 +55,33 @@ export default function Board({ level, isVolumeMuted }) {
       if (highScore === 0 || selectedCard.length >= highScore) {
         setHighScore(highScore + 1)
       }
-      if (items.length !== 1) {
-        removeSelectedCard(card);
-      }
       setSelectedCard([...selectedCard, card])
       if (items.length === 1) {
         setHasWon(true)
         setTimeout(() => {
           setIsGameEnded(true)
+          Sound.win(isVolumeMuted)
         }, 500)
       }
       if (items.length !== 1) {
+        removeSelectedCard(card)
         setTimeout(() => {
           setIsFlipped(false)
-          playFlipSound()
+          Sound.flip(isVolumeMuted)
         }, 1000)
       }
     } else {
       setHasWon(false)
       setTimeout(() => {
         setIsGameEnded(true)
+        Sound.lost(isVolumeMuted)
       }, 500)
     }
   }
 
   const handleClick = (card) => {
     setIsFlipped(true)
-    playFlipSound()
+    Sound.flip(isVolumeMuted)
     setTimeout(() => {
       manageEntries(card)
     }, 500)
@@ -116,12 +107,14 @@ export default function Board({ level, isVolumeMuted }) {
   }
 
   const restartGame = () => {
-    setItems(Cards)
+    setItems(gameMode())
     setEntries([])
     setSelectedCard([])
     setHasWon(false)
     setIsGameEnded(false)
     setIsFlipped(false)
+    Sound.pauseLost()
+    Sound.pauseWin()
   }
 
   const gameMode = () => {
@@ -144,7 +137,7 @@ export default function Board({ level, isVolumeMuted }) {
 
   return (
     <>
-      <div className={`transform ${isGameEnded ? 'scale-0 h-0 absolute top-[60%] opacity-0' : 'scale-100 relative opacity-100'} transition-all duration-500 ease-in-out w-full flex flex-row gap-5 items-center justify-center`}>
+      <div className={`transform ${isGameEnded ? 'scale-0 h-0 absolute top-[60%] opacity-0' : 'scale-100 relative opacity-100'} transition-all duration-500 ease-in-out md:w-full md:flex md:flex-row gap-5 md:items-center md:justify-center grid grid-cols-2`}>
         {entries.map(entry => (
           <ReactCardFlip key={entry.id} isFlipped={isFlipped}>
             <FrontCard

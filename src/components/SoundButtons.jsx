@@ -9,7 +9,7 @@ export default function Sound({ isVolumeMuted, setIsVolumeMuted }) {
 
   const handleMusicClick = () => {
     setIsMusicMuted(!isMusicMuted)
-    volumeRef.current.volume = 0.1
+    volumeRef.current.volume = 0.3
     if (isMusicMuted) {
       volumeRef.current.play()
     } else {
@@ -17,16 +17,21 @@ export default function Sound({ isVolumeMuted, setIsVolumeMuted }) {
     }
   }
 
+  volumeRef.current.addEventListener('ended', () => {
+    volumeRef.current.currentTime = 0;
+    volumeRef.current.play()
+  });
+
   return (
     <div className='absolute flex gap-3 bottom-4 left-6'>
       <Button
-        className='w-12 h-12 p-3.5'
+        type='circle'
         onClick={setIsVolumeMuted}
       >
         {!isVolumeMuted ? <Volume2 strokeWidth={1} /> : <VolumeX strokeWidth={1} />}
       </Button>
       <Button
-        className='w-12 flex items-center justify-center h-12 p-3.5'
+        type='circle'
         onClick={handleMusicClick}
       >
         <Music strokeWidth={1} />
