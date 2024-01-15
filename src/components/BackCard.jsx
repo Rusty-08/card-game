@@ -10,7 +10,7 @@ export default function BackCard() {
         activeOffset={30}
         className='cursor-pointer'
       >
-        <div className="md:w-60 md:h-80 w-32 rounded-lg overflow-hidden">
+        <div className="md:w-60 md:h-80 w-36 h-48 rounded-lg overflow-hidden">
           <img src={backImage} className='h-full w-full' />
         </div>
       </Atropos>

@@ -26,14 +26,14 @@ export default function Faq() {
 
   return (
     <div ref={faqBody} className='absolute flex z-50 bottom-4 right-6'>
-      <div className={`absolute transform ${displayFaq ? 'opacity-1/2 translate-y-0' : 'opacity-0 translate-y-[100%]'} transition-all duration-300 shadow-2xl gap-2 rounded-2xl rounded-br-none flex w-[25rem] bottom-12 right-14 flex-col`}>
+      <div className={`absolute transform ${displayFaq ? 'visible translate-y-0' : 'hidden translate-y-[100%]'} transition-all duration-300 shadow-2xl gap-2 rounded-2xl rounded-br-none flex md:w-[25rem] w-max md:bottom-12 bottom-16 md:right-14 right-0 flex-col`}>
         {faqs.map((faq, i) => (
           <div
             key={i}
-            className='bg-primary-dark backdrop-blur-md text-primary  rounded-full flex gap-2 items-center px-6 py-3'
+            className='bg-primary-dark backdrop-blur-md text-primary rounded-full flex gap-2 items-center px-6 py-3'
           >
             <HelpCircle className='w-5 h-5' strokeWidth={1} />
-            <p className='m-0 text-[1.2rem]'>{faq}</p>
+            <p className='m-0 md:text-[1.2rem] text-[0.9rem]'>{faq}</p>
           </div>
         ))}
       </div>

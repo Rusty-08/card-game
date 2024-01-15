@@ -23,11 +23,13 @@ function App() {
   }
 
   return (
-    <div className='App relative h-screen w-full flex-col flex items-center justify-center overflow-hidden'>
+    <div className='App relative h-[100dvh] w-full flex-col flex items-center justify-center overflow-hidden'>
       <Header isPlaying={isPlaying} reload={restart} />
       {
         isPlaying
-          ? <Board level={level} isVolumeMuted={isVolumeMuted} />
+          ? <div className="flex relative items-center justify-center h-[28.5rem] flex-col">
+            <Board level={level} isVolumeMuted={isVolumeMuted} />
+          </div>
           : <div className='flex gap-4 my-10'>
             {
               levels.map(name => (
