@@ -27,7 +27,7 @@ function App() {
       <Header isPlaying={isPlaying} reload={restart} />
       {
         isPlaying
-          ? <div className="flex relative items-center justify-center h-[28.5rem] flex-col">
+          ? <div className="flex md:static relative items-center justify-center h-[28.5rem] flex-col">
             <Board level={level} isVolumeMuted={isVolumeMuted} />
           </div>
           : <div className='flex gap-4 my-10'>

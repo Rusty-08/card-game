@@ -137,7 +137,7 @@ export default function Board({ level, isVolumeMuted }) {
 
   return (
     <>
-      <div className={`transform ${isGameEnded ? 'scale-0 absolute top-0 md:top-[60%] opacity-0' : 'scale-100 relative opacity-100'} transition-all duration-500 ease-in-out md:w-full md:flex md:flex-row gap-5 md:items-center md:justify-center grid grid-cols-2`}>
+      <div className={`transform ${isGameEnded ? 'scale-0 absolute opacity-0' : 'scale-100 relative opacity-100'} transition-all duration-500 ease-in-out md:w-full md:flex md:flex-row gap-5 md:items-center md:justify-center grid grid-cols-2`}>
         {entries.map(entry => (
           <ReactCardFlip key={entry.id} isFlipped={isFlipped}>
             <FrontCard
